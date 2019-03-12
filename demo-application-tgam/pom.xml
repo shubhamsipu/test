@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.mycompany</groupId>
+	<artifactId>demo-application-tgam</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>mule-application</packaging>
+
+	<name>demo-application-tgam</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<cloudhub.application.name>${cloudhub.properties.env}-${project.artifactId}</cloudhub.application.name>
+		<cloudhub.username>${username}</cloudhub.username>
+		<cloudhub.password>${password}</cloudhub.password>
+		<app.runtime>4.1.5</app.runtime>
+		<mule.maven.plugin.version>3.2.6</mule.maven.plugin.version>
+
+	</properties>
+	<profiles>
+		<profile>
+			<id>Sandbox</id>
+			<properties>
+				<cloudhub.environment>Sandbox</cloudhub.environment>
+				<cloudhub.properties.env>Sandbox</cloudhub.properties.env>
+			</properties>
+		</profile>
+	</profiles>
+
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>${mule.maven.plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<cloudHubDeployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<muleVersion>4.1.5</muleVersion>
+						<username>${cloudhub.username}</username>
+						<password>${cloudhub.password}</password>
+						<applicationName>${cloudhub.application.name}</applicationName>
+						<environment>${cloudhub.environment}</environment>
+						<properties>
+							<env>${cloudhub.properties.env}</env>
+						</properties>
+					</cloudHubDeployment>
+				</configuration>
+				<executions>
+					<execution>
+						<id>deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-http-connector</artifactId>
+			<version>1.4.1</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-sockets-connector</artifactId>
+			<version>1.1.2</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>anypoint-exchange-v2</id>
+			<name>Anypoint Exchange</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v2/maven</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>mulesoft-releases</id>
+			<name>MuleSoft Releases Repository</name>
+			<url>https://repository.mulesoft.org/releases/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>mulesoft-releases</id>
+			<name>mulesoft release repository</name>
+			<layout>default</layout>
+			<url>https://repository.mulesoft.org/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+</project>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="eb3a9a93-86a8-4a2a-a797-274e4e07acf9" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="2e0bc062-83b4-44bd-ac21-86e80c9a8d83" file="${env}.properties" />
+	<configuration-properties doc:name="Configuration properties" doc:id="377bc1a4-f283-42e7-8ff5-5406243a10bc" file="common.properties" />
+	<flow name="demo-application-tgamFlow" doc:id="3e088014-c077-4ce2-94f2-ceee3fc0408e" >
+		<http:listener doc:name="Listener" doc:id="9c1e477e-dc22-4a19-ac28-b78983081787" config-ref="HTTP_Listener_config" path="/test"/>
+		<set-payload value="#['${success}']" doc:name="Set Payload" doc:id="810bf3ca-3612-4459-bb33-0728faaae187" />
+	</flow>
+</mule>

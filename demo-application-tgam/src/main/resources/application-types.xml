@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="input-for-customer" format="json">
+      <types:shape format="weave" example="examples/customer.json"><![CDATA[%dw 2.0
+type input_for_customer = {|
+  identifiers: Array<{|
+    category: String, 
+    "type": String, 
+    value: String, 
+    validityEndDate: String
+  |}>, 
+  name: {|
+    salutation: String, 
+    lastName: String, 
+    firstName: String, 
+    name: String, 
+    title: String
+  |}, 
+  sHouseNum: String, 
+  sHouseNumAffix: String, 
+  sBuildingName: String, 
+  sShippingStreet: String, 
+  sPreDirectional: String, 
+  sPostDirectional: String, 
+  postalCodeExists: Boolean, 
+  postalCodeDetails: {|
+    postalCode: String, 
+    city: String
+  |}, 
+  secondaryAddressText: String, 
+  secondaryAddressNumber: String, 
+  sRegion: String, 
+  sCountryCode: String, 
+  phones: Array<{|
+    "type": String, 
+    areaCode: String, 
+    value: String
+  |}>, 
+  personMobilePhone: String, 
+  fax: String, 
+  personEmailIds: Array<{|
+    id: String, 
+    "default": Boolean
+  |}>, 
+  sDeliveryInstruction: String, 
+  suspensionExemption: String, 
+  taxExemption: String, 
+  uDisplayNameEditable: Boolean, 
+  uChannelType: String, 
+  uChannelName: String, 
+  uCompanyName: String, 
+  uDobMonth: Number {"typeId": "int"}, 
+  uDobYear: Number {"typeId": "int"}
+|} {"MetadataFormat": "json",
+"example": "{\"identifiers\":[{\"category\":\"Primary\",\"type\":\"SFDC\",\"value\":\"AAU0920DJ92182\",\"validityEndDate\":\"2029-12-30\"},{\"category\":\"Secondary\",\"type\":\"STDID\",\"value\":\"AAU0920DJ92182\",\"validityEndDate\":\"2029-12-30\"}],\"name\":{\"salutation\":\"4\",\"lastName\":\"SMILSKY\",\"firstName\":\"LARRY\",\"name\":\"LARRY\",\"title\":\"PROF.\"},\"sHouseNum\":\"4547\",\"sHouseNumAffix\":\"TR\",\"sBuildingName\":\"CN\",\"sShippingStreet\":\"13TH LINE\",\"sPreDirectional\":\"ChampionE\",\"sPostDirectional\":\"Rainbow SW\",\"postalCodeExists\":true,\"postalCodeDetails\":{\"postalCode\":\"M4C 4Y7\",\"city\":\"COOKSTOWN\"},\"secondaryAddressText\":\"\",\"secondaryAddressNumber\":\"\",\"sRegion\":\"ON\",\"sCountryCode\":\"CA\",\"phones\":[{\"type\":\"Home\",\"areaCode\":\"416\",\"value\":\"5229006\"},{\"type\":\"Work\",\"areaCode\":\"416\",\"value\":\"5229006\"}],\"personMobilePhone\":\"6477797081\",\"fax\":\"654987\",\"personEmailIds\":[{\"id\":\"testmailid@gmail.com\",\"default\":true},{\"id\":\"testmailid@gmail.com\",\"default\":false}],\"sDeliveryInstruction\":\"Do not throw on the door.\",\"suspensionExemption\":\"01\",\"taxExemption\":\"0\",\"uDisplayNameEditable\":true,\"uChannelType\":\"CRM\",\"uChannelName\":\"salesforce\",\"uCompanyName\":\"Aria solutions\",\"uDobMonth\":12,\"uDobYear\":1994}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="output" format="xml">
+      <types:example format="xml" element="ZSF_CREATECUSTOMER" location="examples/zsf.xml"/>
+    </types:type>
+    <types:type name="sample-input" format="xml">
+      <types:example format="xml" element="RETURN" location="examples/sample-input.xml"/>
+    </types:type>
+    <types:type name="sample-output" format="json">
+      <types:shape format="weave" example="examples/sample-output.json"><![CDATA[%dw 2.0
+type sample_output = {|
+  RETURN: {|
+    row: Array<{|
+      TYPE: String, 
+      ID: String, 
+      NUMBER: String, 
+      MESSAGE: String, 
+      LOG_NO: String, 
+      LOG_MSG_NO: String, 
+      MESSAGE_V1: String, 
+      MESSAGE_V2: String, 
+      MESSAGE_V3: String, 
+      MESSAGE_V4: String, 
+      PARAMETER: String, 
+      ROW: String, 
+      FIELD: String, 
+      SYSTEM: String, 
+      "-id": String
+    |}>
+  |}
+|} {"MetadataFormat": "json",
+"example": "{\"RETURN\":{\"row\":[{\"TYPE\":\"E\",\"ID\":\"JGBP_BABI\",\"NUMBER\":\"412\",\"MESSAGE\":\"BAPI BAPIBUSISM007_CREATEFROMDATA requires a role\",\"LOG_NO\":\"\",\"LOG_MSG_NO\":\"000000\",\"MESSAGE_V1\":\"\",\"MESSAGE_V2\":\"\",\"MESSAGE_V3\":\"\",\"MESSAGE_V4\":\"\",\"PARAMETER\":\"\",\"ROW\":\"0\",\"FIELD\":\"\",\"SYSTEM\":\"CQ3CLNT320\",\"-id\":\"0\"},{\"TYPE\":\"E\",\"ID\":\"BAPI\",\"NUMBER\":\"001\",\"MESSAGE\":\"No instance of object type ISMBusinessPartner has been created. External reference:\",\"LOG_NO\":\"\",\"LOG_MSG_NO\":\"000000\",\"MESSAGE_V1\":\"ISMBusinessPartner\",\"MESSAGE_V2\":\"\",\"MESSAGE_V3\":\"\",\"MESSAGE_V4\":\"\",\"PARAMETER\":\"\",\"ROW\":\"0\",\"FIELD\":\"\",\"SYSTEM\":\"CQ3CLNT320\",\"-id\":\"1\"}]}}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#88075f71-7f96-42e1-b64e-6a18cbb8cfbb">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="input-for-customer"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#a8cadeef-5a6e-4346-b400-98ca89ccc0e9">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="input-for-customer"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="output"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
